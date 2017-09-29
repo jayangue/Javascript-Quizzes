@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Gawain 1</title>
+<style type="text/css">
+	body {
+			text-align:center;
+			margin: 0px;
+			padding: 0px;
+		}
+		p, header, form, div, h1, section, footer, button {
+			margin: 0px;
+			padding: 0px;
+		}
+		div.maind {
+			display: inline-block
+		}
+		
+		#rt { font-size: 60px;}
+		
+		#l1 {
+			padding-top: 30px;
+			font-size: 100px;
+		}
+</style>
+</head>
+<body>
+<div class="maind">
+
+<h1><p id="rt"> REMAINING TIME: <br><span id="atimer"> 5:00 </span></h1>
+
+<table>
+	<tr>
+	<td><p id="l1"> </p></td>	
+	</tr>
+</table>
+
+</div>
+<!-- =================================== -->
+<script type="text/javascript">
+
+var l1t;
+//CUSTOMIZE MIXED LETTERS HERE! MIX LETTERS SHOWS EVERY 20 SECONDS! MAX NUMBER IS 3!
+var mixlist = ["1.) Ang kompanya ni Pedro ay gumagawa ng mga beer at ibenebenta dito sa Pilipinas",
+			   "2.) Nakatanggap ng suweldo si Pedro kay Juan na kanyang amo sa isang tinapa company", 
+			   "3.) Nagdesisyon si Pedro na ibenta ang kanyang bahay at lupa at upang magawa niyo ito kailangan niyang kumuha ng mga dokumento.",
+			   "4.) Si Juan ay niregalohan si Pedro sa kanyang kasal ng isang mansion at kotse",
+			   "5.) Bumili si Juan ng burger sa Jollibee",
+			   "6.) Si Mang Juan ay nagbenta ng kanyang lupain kay Ron Chicha",
+			   "7.) Si Pedro ay isang doktor at nagtayo siya ng kanyang sariling pribadong clinic at kumikita siya P50, OOO bawat buwan.",
+			   "8.) Si Juan ay nagbebenta ng mga mansanas at kumikita ang kanyang kompanya ng P200,000 bawat taon",
+			   "9.) Namatay ang lolo ni Juan at pinamanahan siya ng bahay at lupa",
+			   "10.) Nagbebenta ng mga sapatos ang kompanya ni Juan at kumikita sila ng P3,000,000 bawat taon."];
+//====================================================================
+var mixlistnum;
+var changecount = 0;
+var changecountmax = mixlist.length - 1;
+var timecount = 0; //Number of Seconds of wait for change.
+var timecountmax = 25; // 20 Seconds before change.
+var timerturnoff = false;
+
+
+function startTimer(duration, display) {
+    var start = Date.now(),
+        diff,
+        minutes,
+        seconds;
+    function timer() {
+		if (timerturnoff == false) {
+        // get the number of seconds that have elapsed since 
+        // startTimer() was called
+        diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds; 
+
+	if (timecount != timecountmax) {
+		timecount++;
+	} else if (timecount == timecountmax) {
+		timecount = 0;
+		if (changecount != changecountmax) {
+			changecount++;
+			showjumbleletters(changecount);
+	
+		} else if (changecount == changecountmax) {
+			changecount = 0;
+			showjumbleletters(changecount);
+		};
+	};
+
+        if (diff <= 0) {
+		//TO-DO
+		  window.open('fd-gawain1-part1answer.html');
+		  timerturnoff = true;
+	   //===========================
+              start = Date.now() + 1000;
+	   //===========================
+        };
+	
+		};
+	};
+	
+    // we don't want to wait a full second before the timer starts
+    timer();
+    setInterval(timer, 1000);
+	
+	
+};
+
+window.onload = function () {
+	//CUSTOMIZE TIME HERE!!! 
+   	var timeneeded = 275;
+	//=====================
+        var tdisplay = document.getElementById("atimer");
+    	startTimer(timeneeded, tdisplay);
+		showjumbleletters(changecount);
+};
+
+function showjumbleletters(mixlistnum) {
+	l1t  = document.getElementById("l1");
+	l1t.innerHTML = mixlist[mixlistnum];
+};
+
+document.addEventListener("keypress", function(e) {
+    if (e.keyCode == 13 || e.keyCode == 34) {
+		timerturnoff = true;
+        window.open('fd-gawain1-part1answer.html');
+    }
+})
+
+</script>
+</body>
+</html>

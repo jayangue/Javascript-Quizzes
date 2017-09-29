@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Gawain 1</title>
+<style type="text/css">
+	body {
+			text-align:center;
+			margin: 0px;
+			padding: 0px;
+		}
+		p, header, form, div, h1, section, footer, button {
+			margin: 0px;
+			padding: 0px;
+		}
+		div.maind {
+			display: inline-block
+		}
+		
+		#rt { font-size: 60px;}
+		
+		#l1 {
+			padding-top: 30px;
+			font-size: 100px;
+		}
+</style>
+</head>
+<body>
+<div class="maind">
+
+<h1><p id="rt"> REMAINING TIME: <br><span id="atimer"> 5:00 </span></h1>
+
+<table>
+	<tr>
+	<td><p id="l1"> </p></td>	
+	</tr>
+</table>
+
+</div>
+<!-- =================================== -->
+<script type="text/javascript">
+
+var l1t;
+//CUSTOMIZE MIXED LETTERS HERE! MIX LETTERS SHOWS EVERY 20 SECONDS! MAX NUMBER IS 3!
+var mixlist = ["1.) Casino",
+			   "2.) World Bank", 
+			   "3.) Lisensya",
+			   "4.) PCSO",
+			   "5.) Lupain",
+			   "6.) Bangko Sentral ng Pilipinas",
+			   "7.) Tulong na pera mula sa USA",
+			   "8.) Upa",
+			   "9.) International Monetary Fund",
+			   "10.) Selyo"];
+//====================================================================
+var mixlistnum;
+var changecount = 0;
+var changecountmax = mixlist.length - 1;
+var timecount = 0; //Number of Seconds of wait for change.
+var timecountmax = 15; // 20 Seconds before change.
+var timerturnoff = false;
+
+
+function startTimer(duration, display) {
+    var start = Date.now(),
+        diff,
+        minutes,
+        seconds;
+    function timer() {
+		if (timerturnoff == false) {
+        // get the number of seconds that have elapsed since 
+        // startTimer() was called
+        diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds; 
+
+	if (timecount != timecountmax) {
+		timecount++;
+	} else if (timecount == timecountmax) {
+		timecount = 0;
+		if (changecount != changecountmax) {
+			changecount++;
+			showjumbleletters(changecount);
+	
+		} else if (changecount == changecountmax) {
+			changecount = 0;
+			showjumbleletters(changecount);
+		};
+	};
+
+        if (diff <= 0) {
+		//TO-DO
+		  window.open('fd-gawain1-part1answer.html');
+		  timerturnoff = true;
+	   //===========================
+              start = Date.now() + 1000;
+	   //===========================
+        };
+	
+		};
+	};
+	
+    // we don't want to wait a full second before the timer starts
+    timer();
+    setInterval(timer, 1000);
+	
+	
+};
+
+window.onload = function () {
+	//CUSTOMIZE TIME HERE!!! 
+   	var timeneeded = 165;
+	//=====================
+        var tdisplay = document.getElementById("atimer");
+    	startTimer(timeneeded, tdisplay);
+		showjumbleletters(changecount);
+};
+
+function showjumbleletters(mixlistnum) {
+	l1t  = document.getElementById("l1");
+	l1t.innerHTML = mixlist[mixlistnum];
+};
+
+document.addEventListener("keypress", function(e) {
+    if (e.keyCode == 13 || e.keyCode == 34) {
+		timerturnoff = true;
+        window.open('fd-gawain1-part1answer.html');
+    }
+})
+
+</script>
+</body>
+</html>
